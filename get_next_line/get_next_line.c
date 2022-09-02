@@ -6,39 +6,38 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 11:42:57 by junyoo            #+#    #+#             */
-/*   Updated: 2022/09/01 16:58:59 by junyoo           ###   ########.fr       */
+/*   Updated: 2022/09/02 12:06:46 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <fcntl.h>
-#include <limits.h>
-#define BUFFER_SIZE 10
+#include "get_next_line.h"
 
 char	*get_next_line(int fd)
 {
-	static char	*line_saved;
-	char		*line_got;
-	int			index;
+	static char		**split_ret;
+	char			*line_ret;
+	char			*temp;
+	int				index;
 
-	if (fd > 0)
+	if (split_ret)
+		return (*split_ret++);
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	line_got = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!line_got)
+	temp = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
+	if (!temp)
 		return (NULL);
-	index = read (fd, line_got, BUFFER_SIZE);
-	while (0 < index)
+	index = read (fd, temp, BUFFER_SIZE);
+	while (index)
 	{
-		index = read (fd, line_got, BUFFER_SIZE);
-		line_got[index] = '\0';
-		line_saved = ft_strjoin(line_saved, line_got);
+		line_ret = ft_strjoin(line_ret, temp);
+		ft_memset(temp, 0x00, BUFFER_SIZE);
+		index = read (fd, temp, BUFFER_SIZE);
 	}
-	free (line_got);
-	line_got = NULL;
-	return (line_saved);
+	split_ret = ft_split(line_ret, '\n');
+	return (*split_ret++);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+static char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*str;
 	size_t	i;
@@ -64,4 +63,67 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	}
 	str[i] = '\0';
 	return (str);
+}
+
+static void	*ft_memset(void	*b, int c, size_t	len)
+{
+	int				i;
+	unsigned char	*temp;
+	unsigned char	ch;
+
+	temp = b;
+	ch = c;
+	i = 0;
+	while (len--)
+	{
+		temp[i] = ch;
+		i++;
+	}
+	return (b);
+}
+
+static char	*ft_strdup(const char *s1)
+{
+	char	*str;
+	int		i;
+
+	str = (char *)malloc(sizeof(char) * (ft_strlen(s1) +1));
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (s1[i])
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
+}
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	char	*src;
+	size_t	i;
+	size_t	slen;
+
+	if (!s)
+		return (NULL);
+	slen = ft_strlen(s);
+	if (start > slen)
+		return (ft_strdup(""));
+	if (slen > len)
+		src = (char *)malloc(sizeof(char) * len + 1);
+	if (slen <= len)
+		src = (char *)malloc(sizeof(char) * slen - start + 1);
+	if (!src)
+		return (NULL);
+	i = 0;
+	while (i < len && s[i])
+	{
+		src[i] = s[start];
+		start++;
+		i++;
+	}
+	src[i] = '\0';
+	return (src);
 }
