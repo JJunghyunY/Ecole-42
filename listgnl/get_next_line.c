@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/01 11:42:57 by junyoo            #+#    #+#             */
+/*   Updated: 2022/09/14 19:12:31 by junyoo           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
 static t_list	*new_fd_lst(t_list **lst, int fd)
 {
-	t_list *new;
+	t_list	*new;
 
 	new = malloc(sizeof(t_list));
-	if(!new)
+	if (!new)
 		return (NULL);
 	new->fd = fd;
 	new->text = NULL;
@@ -22,43 +34,20 @@ static t_list	*new_fd_lst(t_list **lst, int fd)
 	return (new);
 }
 
-static void	clear_list(t_list **head, int fd)
-{
-    t_list	*prev;
-    t_list	*seek;
-
-    seek = *head;
-	if (seek->fd == fd)
-	{
-		seek = seek->next;
-		free(*head);
-		(*head) = seek;
-		return ;
-	}
-    while (seek && seek->fd != fd) 
-		seek = seek->next;
-	prev = seek;
-	if (prev->fd == fd)
-	{
-		seek->next = prev->next;
-		free(prev);
-		return ;
-	}
-}
-
 static char	*after_newline(char *text, t_list **head, int fd)
 {
 	int		index;
 	char	*temp;
 
+	if (!text)
+		return (NULL);
 	index = 0;
 	while (text[index] != '\n' && text[index] != '\0')
 		index++;
 	temp = my_substr(text, index +1, my_strlen(text) - index);
-	if (text[index] != '\n')
+	if (text[index] == '\0')
 	{
-		free(text);
-		clear_list(head, fd);	
+		clear_list(head, fd, text);
 		return (NULL);
 	}
 	else
@@ -87,12 +76,10 @@ char	*subtract_line(char *text)
 
 static char	*read_join_line(char *text, int fd)
 {
-	char	buf[BUFFER_SIZE+1];
-	char  	*res;
-	int   	read_size;
-	
-	if (!text)
-		text = my_strdup("");
+	char	buf[BUFFER_SIZE +1];
+	char	*res;
+	int		read_size;
+
 	read_size = read(fd, buf, BUFFER_SIZE);
 	while (read_size > 0)
 	{
@@ -101,7 +88,7 @@ static char	*read_join_line(char *text, int fd)
 		buf[read_size] = '\0';
 		res = my_strjoin(text, buf);
 		free(text);
-		text = my_strdup(res);
+		text = my_strjoin("", res);
 		free(res);
 		if (my_strchr(buf, '\n'))
 			break ;
@@ -113,31 +100,26 @@ static char	*read_join_line(char *text, int fd)
 char	*get_next_line(int fd)
 {
 	static t_list	*head;
-    t_list			*lst;
+	t_list			*lst;
 	char			*ret_line;
 
-	ret_line = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (0);
+		return (NULL);
 	lst = head;
 	while (lst && lst->fd != fd)
 		lst = lst->next;
 	if (!lst)
-    {
+	{
 		lst = new_fd_lst(&head, fd);
-		if(!lst)
+		if (!lst)
 			return (NULL);
-    }
+	}
 	if (!my_strchr(lst->text, '\n'))
 		lst->text = read_join_line(lst->text, fd);
 	ret_line = subtract_line(lst->text);
 	if (!ret_line)
-	{
-		free(lst->text);
-		clear_list(&head, fd);
-	}
+		clear_list(&head, fd, lst->text);
 	else
 		lst->text = after_newline(lst->text, &head, fd);
 	return (ret_line);
 }
-

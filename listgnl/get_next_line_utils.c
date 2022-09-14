@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/01 11:42:47 by junyoo            #+#    #+#             */
+/*   Updated: 2022/09/14 19:13:14 by junyoo           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
 size_t	my_strlen(const char *s)
@@ -12,27 +24,9 @@ size_t	my_strlen(const char *s)
 	return (len);
 }
 
-char	*my_strdup(const char *s1)
-{
-	char	*str;
-	int		i;
-
-	str = (char *)malloc(sizeof(char) * (my_strlen(s1) +1));
-	if (!str)
-		return (NULL);
-	i = 0;
-	while (s1[i])
-	{
-		str[i] = s1[i];
-		i++;
-	}
-	str[i] = '\0';
-	return (str);
-}
-
 char	*my_substr(char const *s, unsigned int start, size_t len)
 {
-    char	*src;
+	char	*src;
 	size_t	i;
 	size_t	slen;
 
@@ -44,7 +38,7 @@ char	*my_substr(char const *s, unsigned int start, size_t len)
 		slen = my_strlen(s) - (size_t)start;
 	if (len < slen)
 		slen = len;
-	src = (char *)malloc((slen + 1) * sizeof(char));
+	src = (char *)malloc(sizeof(char) * slen + 1);
 	if (!src)
 		return (NULL);
 	while (slen && start < my_strlen(s))
@@ -62,7 +56,7 @@ char	*my_strchr(const char *s, int c)
 	int				i;
 	unsigned char	ch;
 
-	if(!s)
+	if (!s)
 		return (NULL);
 	ch = (unsigned char)c;
 	i = 0;
@@ -81,12 +75,12 @@ char	*my_strjoin(char const *s1, char const *s2)
 {
 	char	*str;
 	size_t	i;
-	size_t	j;
 
+	if (!s1)
+		s1 = "";
 	if (!s2)
 		return (NULL);
 	i = 0;
-	j = 0;
 	str = (char *)malloc(sizeof(char) * (my_strlen(s1) + my_strlen(s2) +1));
 	if (!str)
 		return (NULL);
@@ -95,47 +89,39 @@ char	*my_strjoin(char const *s1, char const *s2)
 		str[i] = s1[i];
 		i++;
 	}
-	while (s2[j])
+	while (*s2)
 	{
-		str[i] = s2[j];
+		str[i] = *s2++;
 		i++;
-		j++;
 	}
 	str[i] = '\0';
 	return (str);
 }
 
-// #include <stdio.h>
-// #include <fcntl.h>
+void	clear_list(t_list **head, int fd, char *text)
+{
+	t_list	*prev;
+	t_list	*seek;
 
-// int main(void)
-// {
-//     int fd1;
-// 	int fd2;
-//     char *line;
-    
-//     fd1 = open("test.txt", O_RDONLY);
-//     line = get_next_line(fd1);
-//     printf("%p\n", line);
-//     printf("%s\n", line);
-// 	line = get_next_line(fd1);
-//     printf("%p\n", line);
-//     printf("%s\n", line);
-
-//     fd2 = open("test.txt", O_RDONLY);
-//     line = get_next_line(fd2);
-//     printf("%p\n", line);
-//     printf("%s\n", line);
-
-//     // line = get_next_line(fd2);
-//     // printf("%p\n", line);
-//     // printf("%s\n", line);
-// 	// line = get_next_line(fd1);
-//     // printf("%p\n", line);
-//     // printf("%s\n", line);
-
-
-// 	close(fd1);
-// //	close(fd2);
-//     return (0);
-// }
+	if (text)
+		free(text);
+	seek = *head;
+	if (seek->fd == fd)
+	{
+		seek = seek->next;
+		free(*head);
+		(*head) = seek;
+		return ;
+	}
+	while (seek)
+	{
+		if (seek->fd == fd)
+		{
+			prev->next = seek->next;
+			free(seek);
+			return ;
+		}
+		prev = seek;
+		seek = seek->next;
+	}
+}
