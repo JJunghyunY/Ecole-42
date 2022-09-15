@@ -6,7 +6,7 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 11:42:57 by junyoo            #+#    #+#             */
-/*   Updated: 2022/09/15 20:34:27 by junyoo           ###   ########.fr       */
+/*   Updated: 2022/09/16 05:22:31 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ static char	*read_join_line(char *text, int fd)
 		res = text;
 		text = my_strjoin(text, buf);
 		free(res);
-		if (my_strchr(buf, '\n'))
+		if (my_strchr(text, '\n'))
 			break ;
 		read_size = read(fd, buf, BUFFER_SIZE);
 	}
