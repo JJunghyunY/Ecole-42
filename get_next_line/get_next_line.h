@@ -6,7 +6,7 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 10:48:12 by junyoo            #+#    #+#             */
-/*   Updated: 2022/09/15 19:22:51 by junyoo           ###   ########.fr       */
+/*   Updated: 2022/09/19 14:52:26 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ typedef struct s_list
 }	t_list;
 
 char			*get_next_line(int fd);
-void			clear_list(t_list **head, int fd, char *text);
 size_t			my_strlen(const char *s);
 char			*my_substr(char const *s, unsigned int start, size_t len);
 char			*my_strchr(const char *s, int c);

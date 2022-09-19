@@ -6,7 +6,7 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 11:42:57 by junyoo            #+#    #+#             */
-/*   Updated: 2022/09/16 05:22:31 by junyoo           ###   ########.fr       */
+/*   Updated: 2022/09/19 14:54:57 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,6 @@ static char	*read_join_line(char *text, int fd)
 	read_size = read(fd, buf, BUFFER_SIZE);
 	while (read_size > 0)
 	{
-		if (read_size == -1)
-			return (NULL);
 		buf[read_size] = '\0';
 		res = text;
 		text = my_strjoin(text, buf);
