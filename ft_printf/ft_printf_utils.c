@@ -1,12 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf_utils.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/26 15:39:17 by junyoo            #+#    #+#             */
+/*   Updated: 2022/09/26 16:45:04 by junyoo           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "ft_printf.h"
-
-int	ft_putchar_int(char c, char format)
-{
-	if (format == '%')
-		return (write(1, "%", 1));
-	return (write(1, &c, 1));
-}
 
 int	ft_putstr_int(char *s)
 {
@@ -34,7 +38,7 @@ int	ft_putnbr_int(int n)
 	num = (long long)n;
 	if (n < 0)
 	{
-		write(1, "-", 1);
+		ret_num += write(1, "-", 1);
 		num *= -1;
 	}
 	while (num)
@@ -42,45 +46,47 @@ int	ft_putnbr_int(int n)
 		temp[i++] = num % 10 + '0';
 		num = num / 10;
 	}
-	ret_num = i;
+	ret_num += i;
 	while (i--)
 		write(1, &temp[i], 1);
 	return (ret_num);
 }
 
-int	ft_puthex_int(int n, char format)
+int	ft_puthex_int(unsigned int n, char format)
 {
 	int		i;
 	char	*table;
-	char	temp[9];
-	
+	char	temp[10];
+
+	if (!n)
+		return (write(1, "0", 1));
 	if (format == 'x')
 		table = "0123456789abcdef";
 	else
 		table = "0123456789ABCDEF";
 	i = 0;
-	while(n > 0)
+	while (n > 0)
 	{
 		temp[i++] = table[n % 16];
 		n /= 16;
 	}
-	while(i--)
+	while (i--)
 		n += write(1, &temp[i], 1);
-//		n += ft_putchar_int(temp[i]);
 	return (n);
 }
 
 int	ft_putptr_int(unsigned int *ptr)
 {
-	char	*table;
-	int		i;
+	char			*table;
+	char			temp[20];
+	int				i;
 	unsigned long	num;
-	char	temp[16];
 
-
-	num = (unsigned long long )ptr;
+	num = (unsigned long)ptr;
 	table = "0123456789abcdef";
 	i = 0;
+	if (!ptr)
+		temp[i++] = '0';
 	while (num > 0)
 	{
 		temp[i++] = table[num % 16];
@@ -90,26 +96,26 @@ int	ft_putptr_int(unsigned int *ptr)
 	temp[i++] = '0';
 	while (i--)
 		num += write(1, &temp[i], 1);
-//		num += ft_putchar_int(temp[i]);
 	return (num);
 }
 
-// else if (*format == 'X')
-// 	ret_len += ft_puthex_up_int(va_arg(ap, int));
-// int ft_puthex_up_int(int n)
-// {
-// 	int		i;
-// 	char	*table;
-// 	char	temp[9];
+int	ft_putuint_int(unsigned int num)
+{
+	char		temp[15];
+	int			i;
+	int			ret_num;
 
-// 	table = "0123456789ABCDEF";
-// 	i = 0;
-// 	while(n > 0)
-// 	{
-// 		temp[i++] = table[n % 16];
-// 		n /= 16;
-// 	}
-// 	while(i--)
-// 		n += ft_putchar_int(temp[i]);
-// 	return (n);
-// }
+	if (num == 0)
+		return (write(1, "0", 1));
+	i = 0;
+	ret_num = 0;
+	while (num)
+	{
+		temp[i++] = num % 10 + '0';
+		num = num / 10;
+	}
+	ret_num += i;
+	while (i--)
+		write(1, &temp[i], 1);
+	return (ret_num);
+}
