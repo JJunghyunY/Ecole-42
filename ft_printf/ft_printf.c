@@ -26,15 +26,17 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-int	ft_putchar_int(char c)
+int	ft_putchar_int(char c, char format)
 {
+	if (format == '%')
+		return (write(1, "%", 1));
 	return (write(1, &c, 1));
 }
 
 int	ft_putstr_int(char *s)
 {
 	if (!s)
-		return (-1);
+		s = "(null)";
 	return (write(1, s, ft_strlen(s)));
 }
 
@@ -61,48 +63,52 @@ int	ft_putnbr_int(int n)
 		num = num / 10;
 	}
 	ret_num = i;
-	while (i)
-		write(1, &temp[i--], 1);
+	while (i--)
+		write(1, &temp[i], 1);
 	return (ret_num);
 }
 
-int	ft_puthex_int(int n)
+int	ft_puthex_int(int n, char format)
 {
 	int		i;
 	char	*table;
 	char	temp[9];
-
-	table = "0123456789abcdef";
+	
+	if (format == 'x')
+		table = "0123456789abcdef";
+	else
+		table = "0123456789ABCDEF";
 	i = 0;
 	while(n > 0)
 	{
-//		i += ft_putchar_int((table[n % 16]));
 		temp[i++] = table[n % 16];
 		n /= 16;
 	}
 	while(i--)
-		n += ft_putchar_int(temp[i]);
+		n += write(1, &temp[i], 1);
+//		n += ft_putchar_int(temp[i]);
 	return (n);
 }
 
-int ft_puthex_up_int(int n)
-{
-	int		i;
-	char	*table;
-	char	temp[9];
+// else if (*format == 'X')
+// 	ret_len += ft_puthex_up_int(va_arg(ap, int));
+// int ft_puthex_up_int(int n)
+// {
+// 	int		i;
+// 	char	*table;
+// 	char	temp[9];
 
-	table = "0123456789ABCDEF";
-	i = 0;
-	while(n > 0)
-	{
-//		i += ft_putchar_int((table[n % 16]));
-		temp[i++] = table[n % 16];
-		n /= 16;
-	}
-	while(i--)
-		n += ft_putchar_int(temp[i]);
-	return (n);
-}
+// 	table = "0123456789ABCDEF";
+// 	i = 0;
+// 	while(n > 0)
+// 	{
+// 		temp[i++] = table[n % 16];
+// 		n /= 16;
+// 	}
+// 	while(i--)
+// 		n += ft_putchar_int(temp[i]);
+// 	return (n);
+// }
 
 int	ft_putptr_int(unsigned int *ptr)
 {
@@ -117,21 +123,21 @@ int	ft_putptr_int(unsigned int *ptr)
 	i = 0;
 	while (num > 0)
 	{
-//		i += ft_putchar_int(table[num % 16]);
 		temp[i++] = table[num % 16];
 		num /= 16;
 	}
 	temp[i++] = 'x';
 	temp[i++] = '0';
 	while (i--)
-		num += ft_putchar_int(temp[i]);
+		num += write(1, &temp[i], 1);
+//		num += ft_putchar_int(temp[i]);
 	return (num);
 }
 
 int	ft_printf(const char *format, ...)
 {
-	va_list	ap;			// 가변인자 포인터 선언
-	int		ret_len;	// 총 출력 길이 저장할 변수 선언
+	va_list	ap;
+	int		ret_len;
 
 	ret_len = 0;
 	va_start(ap, format);
@@ -139,45 +145,45 @@ int	ft_printf(const char *format, ...)
 	{
 		if (*format == '%')
 		{
-			//cspdiuxX%
 			format++;
-			if (*format == 'c')
-				ret_len += ft_putchar_int(va_arg(ap, int));
+			if (*format == 'c' || *format == '%')
+				ret_len += ft_putchar_int(va_arg(ap, int), *format);
 			else if (*format == 's')
 				ret_len += ft_putstr_int((char *)va_arg(ap, char *));
 			else if (*format == 'p')
 				ret_len += ft_putptr_int(va_arg(ap, unsigned int *));
 			else if (*format == 'd' || *format == 'i')
 				ret_len += ft_putnbr_int(va_arg(ap, int));
-			else if (*format == 'x')
-				ret_len += ft_puthex_int(va_arg(ap, int));
-			else if (*format == 'X')
-				ret_len += ft_puthex_up_int(va_arg(ap, int));
-			else if (*format == '%')
-				ret_len += ft_putchar_int(*format);
+			else if (*format == 'x' || *format == 'X')
+				ret_len += ft_puthex_int(va_arg(ap, int), *format);
+			// else if (*format == '%')
+			// 	ret_len += ft_putchar_int(*format);
 		}
-		else /* *format이 '%' 안만났다면 */
-			ret_len += ft_putchar_int(*format);
+		else
+			ret_len += write(1, &(*format), 1);
+//			ret_len += ft_putchar_int(*format);
 		format++;
 	}
 	va_end (ap);
 	return (ret_len);
 }
-/*
+
 int	main(void)
 {
-	int	*ptr;
-	int	n = 10;
-	ptr = &n;
-	int	res = 0;
+	// int	*ptr;
+	// int	n = 10;
+	// ptr = &n;
+	// int	res = 0;
 
-//	printf("printf return : %d\n\n", printf("printf = %p\n", ptr));
-	res = ft_printf("ft_printf = %p\n", ptr);
-	printf("ft_printf return = %d\n\n", res);
+	// res = ft_printf("ft_printf = %p\n", ptr);
+	// printf("ft_printf return = %d\n\n", res);
 
-	res = printf("printf = %p\n", ptr);
-	printf("printf return = %d\n\n", res);
+	// res = printf("printf = %p\n", ptr);
+	// printf("printf return = %d\n\n", res);
+
+//	printf("%d\n", printf("printf = %X\n\n", 123));
+//	printf("printf = %s\n");
+	int i = ft_printf("ft_printf = %s\n", "abc");
 
 	return (0);
 }
-*/
