@@ -1,3 +1,13 @@
+# define TILE "./asset/tile.xpm"
+# define WALL "./asset/wall.xpm"
+# define RAT "./asset/rat.xpm"
+# define BOX_OPEN "./asset/box_open.xpm"
+# define BOX_CLOSE "./asset/box_close.xpm"
+# define CAT_UP "./asset/cat_up.xpm"
+# define CAT_DOWN "./asset/cat_down.xpm"
+# define CAT_RIGHT "./asset/cat_right.xpm"
+# define CAT_LEFT "./asset/cat_left.xpm"
+
 #include "./mlx/mlx.h"
 #include "./source/get_next_line.h"
 #include <stdio.h>
@@ -6,10 +16,65 @@
 
 typedef struct s_game
 {
+	void	*mlx_ptr;
+	void	*win_ptr;
 	int		height;
 	int		width;
 	char	*str;
+	int		col;
+	int		row;
+
+	void	*img_tile;
+	void	*img_wall;
+	void	*img_cat_right;
+	void	*img_rat;
+	void	*img_box_close;
 }	t_game;
+
+char	*my_strjoin(char const *s1, char const *s2);
+void	press_w(t_game *game);
+char	*ft_strdup(const char *s1);
+int		deal_key(int key, t_game *game);
+void	map_set(t_game *game);
+
+void	map_set(t_game *game)
+{
+	int	height = 0;
+	int	width = 0;
+
+	int img_width;
+	int img_height;
+
+	game->img_wall = mlx_xpm_file_to_image(game->mlx_ptr, WALL, &img_width, &img_height);
+	game->img_tile = mlx_xpm_file_to_image(game->mlx_ptr, TILE, &img_width, &img_height);
+	game->img_cat_right = mlx_xpm_file_to_image(game->mlx_ptr, CAT_RIGHT, &img_width, &img_height);
+	game->img_rat = mlx_xpm_file_to_image(game->mlx_ptr, RAT, &img_width, &img_height);
+	game->img_box_close = mlx_xpm_file_to_image(game->mlx_ptr, BOX_CLOSE, &img_width, &img_height);
+
+	int i = 0;
+	while (height < game -> height)
+	{
+		width = 0;
+		while (width < game -> width)
+		{
+			if (game -> str[i] == '1')
+				mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img_wall, width * 50, height * 50);
+			else if (game -> str[i] == '0')
+				mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img_tile, width * 50, height * 50);
+			else if (game -> str[i] == 'P')
+				mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img_cat_right, width * 50, height * 50);
+			else if (game -> str[i] == 'C')
+				mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img_rat, width * 50, height * 50);
+			else if (game -> str[i] == 'E')
+				mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img_box_close, width * 50, height * 50);
+			width ++;
+			i++;
+		}
+		height++;
+	}
+	mlx_key_hook(game->win_ptr, deal_key, (void *)0);
+	mlx_loop(game->mlx_ptr);
+}
 
 char	*my_strjoin(char const *s1, char const *s2)
 {
@@ -50,73 +115,33 @@ char	*ft_strdup(const char *s1)
 	return (str);
 }
 
-// void	action_w()
-// {
-
-// }
-
-int	deal_key(int key, void *param)
+void press_w(t_game *game)
 {
-	printf("keycode : %d\n", key);
-	// if (key == 13)
-	// 	action_w();
-	return (0);
+	int	i;
+
+	i = 0;
+	while(i++ < ft_strlen(game->str))
+	{
+		if (game->str[i] == 'P')
+			break;
+	}
+		game->str[i] = '0';
+		game->str[i - game->width] = 'P';
+		printf("cat position is %d", i);
 }
 
-void	map_set(t_game *game)
+int	deal_key(int key, t_game *game)
 {
-	void	*mlx_ptr;
-	void	*win_ptr;
-
-	int	height = 0;
-	int	width = 0;
-	int	game_height = game -> height;
-	int	game_width = game -> width;
-
-	void	*img_wall;
-	void	*img_tile;
-	void	*img_cat;
-	void	*img_rat;
-	void	*img_box;
-
-	int img_width;
-	int img_height;
-
-	printf("%s", game -> str);
-
-	mlx_ptr = mlx_init();
-	win_ptr = mlx_new_window(mlx_ptr, 700, 300, "junyoo");
-	img_wall = mlx_xpm_file_to_image(mlx_ptr, "./asset/wall.xpm", &img_width, &img_height);
-	img_tile = mlx_xpm_file_to_image(mlx_ptr, "./asset/tile.xpm", &img_width, &img_height);
-	img_cat = mlx_xpm_file_to_image(mlx_ptr, "./asset/cat_right.xpm", &img_width, &img_height);
-	img_rat = mlx_xpm_file_to_image(mlx_ptr, "./asset/rat.xpm", &img_width, &img_height);
-	img_box = mlx_xpm_file_to_image(mlx_ptr, "./asset/box_open.xpm", &img_width, &img_height);
-
-	char	*str = game -> str;
-
-	int i = 0;
-	while (height < game_height)
-	{
-		width = 0;
-		while (width < game_width)
-		{
-			if (game -> str[i] == '1')
-				mlx_put_image_to_window(mlx_ptr, win_ptr, img_wall, width * 50, height * 50);
-			else if (game -> str[i] == '0')
-				mlx_put_image_to_window(mlx_ptr, win_ptr, img_tile, width * 50, height * 50);
-			else if (game -> str[i] == 'P')
-				mlx_put_image_to_window(mlx_ptr, win_ptr, img_cat, width * 50, height * 50);
-			else if (game -> str[i] == 'C')
-				mlx_put_image_to_window(mlx_ptr, win_ptr, img_rat, width * 50, height * 50);
-			else if (game -> str[i] == 'E')
-				mlx_put_image_to_window(mlx_ptr, win_ptr, img_box, width * 50, height * 50);
-			width ++;
-			i++;
-		}
-		height++;
-	}
-	mlx_key_hook(win_ptr, deal_key, (void *)0);
-	mlx_loop(mlx_ptr);
+	printf("%d\n",key);
+	if (key == 13)
+		press_w(game);
+	// else if (key = 0)
+	// 	press_a();
+	// else if (key == 1)
+	// 	press_s();
+	// else if (key == 2)
+	// 	press_d();
+	return (0);
 }
 
 void	map_read(char *filename, t_game *game)
@@ -147,6 +172,8 @@ int	main(int argc, char *argv[])
 
 	game = malloc(sizeof(t_game));
 	map_read(argv[1], game);
+	game->mlx_ptr = mlx_init();
+	game->win_ptr = mlx_new_window(game->mlx_ptr, 700, 300, "junyoo");
 	map_set(game);
 }
 
