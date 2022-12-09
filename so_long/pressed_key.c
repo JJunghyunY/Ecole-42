@@ -6,11 +6,26 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:57:54 by junyoo            #+#    #+#             */
-/*   Updated: 2022/12/06 21:49:48 by junyoo           ###   ########.fr       */
+/*   Updated: 2022/12/10 04:14:09 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./so_long.h"
+
+int	deal_key(int key, t_game *game)
+{
+	if (key == 13)
+		press_w(game);
+	else if (key == 0)
+		press_a(game);
+	else if (key == 1)
+		press_s(game);
+	else if (key == 2)
+		press_d(game);
+	else if (key == 53)
+		exit(0);
+	return (0);
+}
 
 void	press_w(t_game *game)
 {
@@ -94,19 +109,4 @@ void	press_d(t_game *game)
 		game->c_move += 1;
 		map_set(game, 2, game->c_rat);
 	}
-}
-
-int	deal_key(int key, t_game *game)
-{
-	if (key == 13)
-		press_w(game);
-	else if (key == 0)
-		press_a(game);
-	else if (key == 1)
-		press_s(game);
-	else if (key == 2)
-		press_d(game);
-	else if (key == 53)
-		exit(0);
-	return (0);
 }

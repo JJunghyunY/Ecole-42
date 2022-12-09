@@ -6,36 +6,54 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 18:10:34 by junyoo            #+#    #+#             */
-/*   Updated: 2022/12/06 22:22:12 by junyoo           ###   ########.fr       */
+/*   Updated: 2022/12/10 04:07:27 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./so_long.h"
 
-void	put_box_image(t_game *g, int hei, int wid, int c_rat)
+void	map_read(char *filename, t_game *game)
 {
-	if (c_rat == 0)
-		mlx_put_image_to_window(g->mlx, g->win, g->box_open,
-			wid * 50, hei * 50);
-	else
-		mlx_put_image_to_window(g->mlx, g->win, g->box_close,
-			wid * 50, hei * 50);
+	int		fd;
+	char	*line;
+
+	fd = open(filename, O_RDONLY);
+	if (fd <= 0)
+		ret_error("error occured ");
+	line = get_next_line(fd);
+	game->hei = 0;
+	game->wid = ft_strlen(line) -1;
+	game->str = solong_strdup(line);
+	free(line);
+	while (line)
+	{
+		game->hei++;
+		line = get_next_line(fd);
+		if (line)
+		{
+			if (game->wid != strlen(line) - 1)
+				ret_error("uncompleted map");
+			game->str = solong_strjoin(game->str, line);
+		}
+	}
+	close(fd);
+	count_rat(game);
 }
 
-void	put_cat_image(t_game *game, int height, int width, int key_code)
+void	img_set(t_game *game)
 {
-	if (key_code == 13)
-		mlx_put_image_to_window(game->mlx, game->win, game->cat_up,
-			width * 50, height * 50);
-	else if (key_code == 0)
-		mlx_put_image_to_window(game->mlx, game->win, game->cat_left,
-			width * 50, height * 50);
-	else if (key_code == 1)
-		mlx_put_image_to_window(game->mlx, game->win, game->cat_down,
-			width * 50, height * 50);
-	else
-		mlx_put_image_to_window(game->mlx, game->win, game->cat_right,
-			width * 50, height * 50);
+	int	wid;
+	int	hei;
+
+	game->wall = mlx_xpm_file_to_image(game->mlx, WALL, &wid, &hei);
+	game->tile = mlx_xpm_file_to_image(game->mlx, TILE, &wid, &hei);
+	game->cat_up = mlx_xpm_file_to_image(game->mlx, CAT_UP, &wid, &hei);
+	game->cat_down = mlx_xpm_file_to_image(game->mlx, CAT_DOWN, &wid, &hei);
+	game->cat_right = mlx_xpm_file_to_image(game->mlx, CAT_RIGHT, &wid, &hei);
+	game->cat_left = mlx_xpm_file_to_image(game->mlx, CAT_LEFT, &wid, &hei);
+	game->rat = mlx_xpm_file_to_image(game->mlx, RAT, &wid, &hei);
+	game->box_close = mlx_xpm_file_to_image(game->mlx, BOX_CLOSE, &wid, &hei);
+	game->box_open = mlx_xpm_file_to_image(game->mlx, BOX_OPEN, &wid, &hei);
 }
 
 void	map_set(t_game *game, int key_code, int c_rat)
@@ -67,46 +85,28 @@ void	map_set(t_game *game, int key_code, int c_rat)
 	}
 }
 
-void	map_read(char *filename, t_game *game)
+void	put_box_image(t_game *g, int hei, int wid, int c_rat)
 {
-	int		fd;
-	char	*line;
-
-	fd = open(filename, O_RDONLY);
-	if (fd <= 0)
-	{
-		perror ("following error occured ");
-		exit (0);
-	}
-	line = get_next_line(fd);
-	game->hei = 0;
-	game->wid = ft_strlen(line) -1;
-	game->str = ft_strdup(line);
-	free(line);
-	while (line)
-	{
-		game->hei++;
-		line = get_next_line(fd);
-		if (line)
-			game->str = my_strjoin(game->str, line);
-	}
-	close(fd);
-	count_rat(game);
-	printf("%s\n", game->str);
+	if (c_rat == 0)
+		mlx_put_image_to_window(g->mlx, g->win, g->box_open,
+			wid * 50, hei * 50);
+	else
+		mlx_put_image_to_window(g->mlx, g->win, g->box_close,
+			wid * 50, hei * 50);
 }
 
-void	count_rat(t_game *game)
+void	put_cat_image(t_game *game, int height, int width, int key_code)
 {
-	int	i;
-	int	c_rat;
-
-	i = 0;
-	c_rat = 0;
-	while (game->str[i++])
-	{
-		if (game->str[i] == 'C')
-			c_rat ++;
-	}
-	game->c_rat = c_rat;
-	game->c_move = 0;
+	if (key_code == 13)
+		mlx_put_image_to_window(game->mlx, game->win, game->cat_up,
+			width * 50, height * 50);
+	else if (key_code == 0)
+		mlx_put_image_to_window(game->mlx, game->win, game->cat_left,
+			width * 50, height * 50);
+	else if (key_code == 1)
+		mlx_put_image_to_window(game->mlx, game->win, game->cat_down,
+			width * 50, height * 50);
+	else
+		mlx_put_image_to_window(game->mlx, game->win, game->cat_right,
+			width * 50, height * 50);
 }

@@ -6,7 +6,7 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:59:02 by junyoo            #+#    #+#             */
-/*   Updated: 2022/12/06 21:44:34 by junyoo           ###   ########.fr       */
+/*   Updated: 2022/12/10 04:12:18 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ typedef struct s_game
 	char	*str;
 	int		c_rat;
 	int		c_move;
+	int		c_exit;
+	char	**map;
 
 	void	*tile;
 	void	*wall;
@@ -51,17 +53,31 @@ typedef struct s_game
 	void	*box_open;
 }	t_game;
 
-char	*my_strjoin(char const *s1, char const *s2);
-char	*ft_strdup(const char *s1);
+int		end_game(t_game *game);
+void	ret_error(char *errmsg);
+
+char	*solong_strdup(const char *s1);
+char	*ft_strndup(const char *s1, int len);
+char	*solong_strjoin(char const *s1, char const *s2);
+char	**str_to_matrix(char *str, int height, int width);
 void	count_rat(t_game *game);
+
 void	img_set(t_game *game);
 void	map_set(t_game *game, int pressed_key, int c_rat);
 void	map_read(char *filename, t_game *game);
-int		end_game(t_game *game);
+void	put_box_image(t_game *g, int hei, int wid, int c_rat);
+void	put_cat_image(t_game *game, int height, int width, int key_code);
+
+int		deal_key(int key, t_game *game);
 void	press_w(t_game *game);
 void	press_a(t_game *game);
 void	press_s(t_game *game);
 void	press_d(t_game *game);
-int		deal_key(int key, t_game *game);
+
+void	map_check(t_game *game);
+int		check_pce(t_game *game);
+int		check_around_wall(t_game *game);
+int		cat_to_exit(t_game *game);
+void	dfs(int x, int y, char **map, t_game *checker);
 
 #endif
