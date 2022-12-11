@@ -6,7 +6,7 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 18:00:43 by junyoo            #+#    #+#             */
-/*   Updated: 2022/12/11 15:45:39 by junyoo           ###   ########.fr       */
+/*   Updated: 2022/12/11 22:28:34 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	main(int argc, char *argv[])
 	}
 	else
 		perror ("please input only one map");
-	// system("leaks a.out");
 	return (0);
 }
 
@@ -39,6 +38,7 @@ int	end_game(t_game *game)
 {
 	print_cat_move(game->c_move + 1, 0);
 	mlx_destroy_window(game->mlx, game->win);
+	free(game);
 	exit(0);
 }
 
@@ -53,9 +53,9 @@ void	print_cat_move(int c_move, int flag)
 	if (flag)
 		write(1, "cat moved ", 10);
 	else
-   		write(1, "\ngame over!! your cat moved ", 28);
+		write(1, "\ngame over!! your cat moved ", 28);
 	ft_putnbr(c_move);
-    write(1, " steps\n", 7);
+	write(1, " steps\n", 7);
 }
 
 void	ft_putnbr(int n)
@@ -64,7 +64,7 @@ void	ft_putnbr(int n)
 	int			i;
 	char		str[15];
 
-	temp = (long)n;
+	temp = (long long)n;
 	i = 0;
 	if (n < 0)
 	{

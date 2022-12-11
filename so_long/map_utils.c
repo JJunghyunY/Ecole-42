@@ -6,7 +6,7 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 18:10:34 by junyoo            #+#    #+#             */
-/*   Updated: 2022/12/11 15:29:22 by junyoo           ###   ########.fr       */
+/*   Updated: 2022/12/11 22:02:29 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	map_read(char *filename, t_game *game)
 {
 	int		fd;
 	char	*line;
+	char	*temp;
 
 	fd = open(filename, O_RDONLY);
 	if (fd <= 0)
@@ -23,11 +24,14 @@ void	map_read(char *filename, t_game *game)
 	line = get_next_line(fd);
 	game->hei = 0;
 	game->wid = ft_strlen(line) - 1;
+	game->str = NULL;
 	while (line)
 	{
 		game->hei++;
+		temp = game->str;
 		game->str = solong_strjoin(game->str, line);
-		printf("gamestr = %s\n", game->str);
+		free(temp);
+		free(line);
 		line = get_next_line(fd);
 	}
 	close(fd);

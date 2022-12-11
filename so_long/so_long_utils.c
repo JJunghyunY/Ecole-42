@@ -6,28 +6,20 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 03:41:44 by junyoo            #+#    #+#             */
-/*   Updated: 2022/12/11 15:29:45 by junyoo           ###   ########.fr       */
+/*   Updated: 2022/12/11 22:48:18 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./so_long.h"
 
-char	*ft_strndup(const char *s1, int len)
+void	checkerset(t_game *checker, t_game *game)
 {
-	char	*str;
-	int		i;
-
-	str = (char *)malloc(sizeof(char) * (ft_strlen(s1) +1));
-	if (!str)
-		return (NULL);
-	i = 0;
-	while (i < len)
-	{
-		str[i] = s1[i];
-		i++;
-	}
-	str[i] = '\0';
-	return (str);
+	checker->c_rat = game->c_rat;
+	checker->c_exit = 1;
+	checker->hei = game->hei;
+	checker->wid = game->wid;
+	checker->map = str_to_matrix(game->str, game->hei, game->wid);
+	game->map = str_to_matrix(game->str, game->hei, game->wid);
 }
 
 char	*solong_strjoin(char const *s1, char const *s2)
@@ -56,18 +48,17 @@ char	**str_to_matrix(char *str, int height, int width)
 	char	**matrix;
 	int		i;
 	int		j;
+	char	*temp;
 
-	matrix = (char **)malloc(sizeof(char) * height + 1);
+	matrix = (char **)malloc(sizeof(char *) * (height +1));
 	if (!matrix)
 		ret_error("malloc failed");
 	i = 0;
 	j = 0;
 	while (i < height)
 	{
-		matrix[i] = (char *)malloc(sizeof(char) * width);
-		if (!matrix[i])
-			ret_error("malloc failed");
-		matrix[i] = ft_strndup(&str[i * width], width);
+		matrix[i] = ft_substr(str, i * width, width);
+		// matrix[i] = ft_strndup(&str[i * width], width);
 		i++;
 	}
 	matrix[i] = NULL;

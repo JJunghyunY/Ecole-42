@@ -6,7 +6,7 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 03:30:25 by junyoo            #+#    #+#             */
-/*   Updated: 2022/12/11 15:34:15 by junyoo           ###   ########.fr       */
+/*   Updated: 2022/12/11 22:48:36 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,26 +78,22 @@ int	cat_to_exit(t_game *game)
 	t_game	*checker;
 
 	checker = malloc(sizeof(t_game));
-	checker->c_rat = game->c_rat;
-	checker->c_exit = 1;
-	checker->hei = game->hei;
-	checker->wid = game->wid;
-	checker->map = str_to_matrix(game->str, game->hei, game->wid);
-	game->map = str_to_matrix(game->str, game->hei, game->wid);
-	i = 0;
-	while (i < game->hei)
+	checkerset(checker, game);
+	i = -1;
+	while (++i < game->hei)
 	{
-		j = 0;
-		while (j < game->wid)
-		{
+		j = -1;
+		while (++j < game->wid)
 			if (game->map[i][j] == 'P')
 				dfs(i, j, game->map, checker);
-			j++;
-		}
-		i++;
 	}
 	if (checker->c_exit != 0 || checker->c_rat != 0)
 		return (1);
+	i = -1;
+	while (++i < game->hei)
+		free(checker->map[i]);
+	free(checker->map);
+	free(checker);
 	return (0);
 }
 
@@ -107,7 +103,6 @@ void	dfs(int x, int y, char **map, t_game *checker)
 	const int	dx[4] = {1, -1, 0, 0};
 	const int	dy[4] = {0, 0, 1, -1};
 
-	printf("\ndfs hihi rat is %d\n", checker->c_rat);
 	if (checker->map[x][y] == '1')
 		return ;
 	checker->map[x][y] = '1';
@@ -118,7 +113,7 @@ void	dfs(int x, int y, char **map, t_game *checker)
 	else if (map[x][y] == 'C')
 		checker->c_rat -= 1;
 	i = 0;
-	while (i < 4)
+	while (i < checker->hei - 1)
 	{
 		if (x + dx[i] < checker->hei || y + dy[i] < checker->wid)
 			dfs(x + dx[i], y + dy[i], map, checker);
