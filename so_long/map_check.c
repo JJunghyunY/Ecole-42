@@ -6,7 +6,7 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 03:30:25 by junyoo            #+#    #+#             */
-/*   Updated: 2022/12/10 04:10:48 by junyoo           ###   ########.fr       */
+/*   Updated: 2022/12/11 15:34:15 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	map_check(t_game *game)
 		ret_error("Not a rectangular map");
 	else if (check_pce(game))
 		exit(0);
+	else if (game->wid * game->hei != ft_strlen(game->str))
+		ret_error("uncompleted map");
 	else if (check_around_wall(game))
 		ret_error("Map is not surrounded by wall");
 	else if (cat_to_exit(game))
@@ -105,6 +107,7 @@ void	dfs(int x, int y, char **map, t_game *checker)
 	const int	dx[4] = {1, -1, 0, 0};
 	const int	dy[4] = {0, 0, 1, -1};
 
+	printf("\ndfs hihi rat is %d\n", checker->c_rat);
 	if (checker->map[x][y] == '1')
 		return ;
 	checker->map[x][y] = '1';
@@ -117,7 +120,7 @@ void	dfs(int x, int y, char **map, t_game *checker)
 	i = 0;
 	while (i < 4)
 	{
-		if (x + dx[i] < 5 || y + dy[i] < 13)
+		if (x + dx[i] < checker->hei || y + dy[i] < checker->wid)
 			dfs(x + dx[i], y + dy[i], map, checker);
 		i++;
 	}

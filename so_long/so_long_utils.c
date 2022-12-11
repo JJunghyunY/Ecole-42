@@ -6,29 +6,11 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 03:41:44 by junyoo            #+#    #+#             */
-/*   Updated: 2022/12/10 04:08:12 by junyoo           ###   ########.fr       */
+/*   Updated: 2022/12/11 15:29:45 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./so_long.h"
-
-char	*solong_strdup(const char *s1)
-{
-	char	*str;
-	int		i;
-
-	str = (char *)malloc(sizeof(char) * (ft_strlen(s1)));
-	if (!str)
-		return (NULL);
-	i = 0;
-	while (s1[i] != '\n')
-	{
-		str[i] = s1[i];
-		i++;
-	}
-	str[i] = '\0';
-	return (str);
-}
 
 char	*ft_strndup(const char *s1, int len)
 {
@@ -58,7 +40,7 @@ char	*solong_strjoin(char const *s1, char const *s2)
 	if (!s2)
 		return (NULL);
 	i = 0;
-	str = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) +1));
+	str = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2)));
 	if (!str)
 		return (NULL);
 	while (*s1)

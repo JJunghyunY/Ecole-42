@@ -6,7 +6,7 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 18:10:34 by junyoo            #+#    #+#             */
-/*   Updated: 2022/12/10 04:07:27 by junyoo           ###   ########.fr       */
+/*   Updated: 2022/12/11 15:29:22 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,13 @@ void	map_read(char *filename, t_game *game)
 		ret_error("error occured ");
 	line = get_next_line(fd);
 	game->hei = 0;
-	game->wid = ft_strlen(line) -1;
-	game->str = solong_strdup(line);
-	free(line);
+	game->wid = ft_strlen(line) - 1;
 	while (line)
 	{
 		game->hei++;
+		game->str = solong_strjoin(game->str, line);
+		printf("gamestr = %s\n", game->str);
 		line = get_next_line(fd);
-		if (line)
-		{
-			if (game->wid != strlen(line) - 1)
-				ret_error("uncompleted map");
-			game->str = solong_strjoin(game->str, line);
-		}
 	}
 	close(fd);
 	count_rat(game);
@@ -61,7 +55,7 @@ void	map_set(t_game *game, int key_code, int c_rat)
 	int	height;
 	int	width;
 
-	printf("cat movd %d steps\n", game->c_move);
+	print_cat_move(game->c_move, 1);
 	height = -1;
 	while (++height < game->hei)
 	{

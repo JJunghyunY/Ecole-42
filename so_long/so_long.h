@@ -6,7 +6,7 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:59:02 by junyoo            #+#    #+#             */
-/*   Updated: 2022/12/10 04:12:18 by junyoo           ###   ########.fr       */
+/*   Updated: 2022/12/11 15:30:03 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,9 @@ typedef struct s_game
 
 int		end_game(t_game *game);
 void	ret_error(char *errmsg);
+void	print_cat_move(int c_move, int flag);
+void	ft_putnbr(int n);
 
-char	*solong_strdup(const char *s1);
 char	*ft_strndup(const char *s1, int len);
 char	*solong_strjoin(char const *s1, char const *s2);
 char	**str_to_matrix(char *str, int height, int width);
