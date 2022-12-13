@@ -88,4 +88,3 @@ References:
 - http://karma-runner.github.io/1.0/dev/git-commit-msg.html
 - https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue
 - https://docs.gitlab.com/ee/user/project/issues/managing_issues.html
-
