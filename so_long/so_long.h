@@ -6,14 +6,14 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:59:02 by junyoo            #+#    #+#             */
-/*   Updated: 2022/12/12 16:34:08 by junyoo           ###   ########.fr       */
+/*   Updated: 2022/12/12 22:20:28 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# include "./mlx/mlx.h"
+# include <mlx.h>
 # include "./get_next_line.h"
 # include <stdio.h>
 # include <fcntl.h>

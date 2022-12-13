@@ -6,7 +6,7 @@
 #    By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/12 16:31:36 by junyoo            #+#    #+#              #
-#    Updated: 2022/12/12 17:42:13 by junyoo           ###   ########.fr        #
+#    Updated: 2022/12/12 22:14:19 by junyoo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,11 +26,13 @@ SRCS		= so_long.c so_long_utils.c pressed_key.c map_check.c map_utils.c\
 
 OBJS		= $(SRCS:.c=.o)
 
+%.o:	%.c
+	$(CC) $(CFLAGS) -c $<
+
 all:	$(NAME)
 
-$(NAME):	$(SRCS)
-	$(CC) $(CFLAGS) -L$(MLXDIR) -l$(MLXNAME) $(MLXFLAGS) $^ -o $@
-	$(CC) $(CFLAGS) -c $(SRCS)
+$(NAME):	$(OBJS)
+	$(CC) $(CFLAGS) -l$(MLXNAME) $(MLXFLAGS) $^ -o $@ 
 	
 clean:
 	$(RM) $(OBJS)
