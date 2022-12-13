@@ -6,13 +6,13 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 10:48:12 by junyoo            #+#    #+#             */
-/*   Updated: 2022/12/10 04:12:21 by junyoo           ###   ########.fr       */
+/*   Updated: 2022/12/12 16:27:10 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-# define BUFFER_SIZE	13
+# define BUFFER_SIZE	15
 
 # include <unistd.h>
 # include <stdlib.h>

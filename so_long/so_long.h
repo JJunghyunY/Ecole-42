@@ -6,7 +6,7 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:59:02 by junyoo            #+#    #+#             */
-/*   Updated: 2022/12/11 22:47:59 by junyoo           ###   ########.fr       */
+/*   Updated: 2022/12/12 16:34:08 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include "./get_next_line.h"
 # include <stdio.h>
 # include <fcntl.h>
-# include <string.h>
 
 # define TILE "./asset/tile.xpm"
 # define WALL "./asset/wall.xpm"
@@ -28,7 +27,6 @@
 # define CAT_DOWN "./asset/cat_down.xpm"
 # define CAT_RIGHT "./asset/cat_right.xpm"
 # define CAT_LEFT "./asset/cat_left.xpm"
-
 
 typedef struct s_game
 {
@@ -57,11 +55,12 @@ void	checkerset(t_game *checker, t_game *game);
 int		end_game(t_game *game);
 void	ret_error(char *errmsg);
 void	print_cat_move(int c_move, int flag);
-void	ft_putnbr(int n);
+int		exit_game(t_game *game);
 
 char	*solong_strjoin(char const *s1, char const *s2);
 char	**str_to_matrix(char *str, int height, int width);
 void	count_rat(t_game *game);
+void	ft_putnbr(int n);
 
 void	img_set(t_game *game);
 void	map_set(t_game *game, int pressed_key, int c_rat);

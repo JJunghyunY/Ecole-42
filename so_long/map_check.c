@@ -6,7 +6,7 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 03:30:25 by junyoo            #+#    #+#             */
-/*   Updated: 2022/12/11 22:48:36 by junyoo           ###   ########.fr       */
+/*   Updated: 2022/12/12 19:24:39 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 
 void	map_check(t_game *game)
 {
+	int	strlen;
+
+	strlen = (int)ft_strlen(game->str);
 	if (game->hei == game->wid)
 		ret_error("Not a rectangular map");
 	else if (check_pce(game))
 		exit(0);
-	else if (game->wid * game->hei != ft_strlen(game->str))
+	else if (game->wid * game->hei != strlen)
 		ret_error("uncompleted map");
 	else if (check_around_wall(game))
 		ret_error("Map is not surrounded by wall");
@@ -113,9 +116,9 @@ void	dfs(int x, int y, char **map, t_game *checker)
 	else if (map[x][y] == 'C')
 		checker->c_rat -= 1;
 	i = 0;
-	while (i < checker->hei - 1)
+	while (i < 4)
 	{
-		if (x + dx[i] < checker->hei || y + dy[i] < checker->wid)
+		if (x + dx[i] < checker->hei && y + dy[i] < checker->wid)
 			dfs(x + dx[i], y + dy[i], map, checker);
 		i++;
 	}

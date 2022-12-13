@@ -6,7 +6,7 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 03:41:44 by junyoo            #+#    #+#             */
-/*   Updated: 2022/12/11 22:48:18 by junyoo           ###   ########.fr       */
+/*   Updated: 2022/12/12 16:42:08 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ char	**str_to_matrix(char *str, int height, int width)
 	char	**matrix;
 	int		i;
 	int		j;
-	char	*temp;
 
 	matrix = (char **)malloc(sizeof(char *) * (height +1));
 	if (!matrix)
@@ -58,7 +57,6 @@ char	**str_to_matrix(char *str, int height, int width)
 	while (i < height)
 	{
 		matrix[i] = ft_substr(str, i * width, width);
-		// matrix[i] = ft_strndup(&str[i * width], width);
 		i++;
 	}
 	matrix[i] = NULL;
@@ -92,4 +90,31 @@ void	count_rat(t_game *game)
 		ret_error("There must be only one of Cat and Exit");
 	game->c_rat = c_rat;
 	game->c_move = 0;
+}
+
+void	ft_putnbr(int n)
+{
+	long long	temp;
+	int			i;
+	char		str[15];
+
+	temp = (long long)n;
+	i = 0;
+	if (n < 0)
+	{
+		temp *= -1;
+		write (1, "-", 1);
+	}
+	else if (n == 0)
+	{
+		write (1, "0", 1);
+		return ;
+	}
+	while (temp)
+	{
+		str[i++] = (temp % 10) + '0';
+		temp /= 10;
+	}
+	while (--i >= 0)
+		write(1, str + i, 1);
 }
