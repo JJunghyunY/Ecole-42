@@ -1,41 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/14 11:19:18 by junyoo            #+#    #+#             */
-/*   Updated: 2022/12/14 16:58:11 by junyoo           ###   ########.fr       */
+/*   Created: 2022/07/06 15:39:40 by junyoo            #+#    #+#             */
+/*   Updated: 2022/07/18 16:28:26 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-# include "libft/libft.h"
-
-typedef struct s_node
+void	*ft_memset(void	*b, int c, size_t	len)
 {
-	int				value;
-	size_t			index;
-	struct s_node	*prev;
-	struct s_node	*next;
-}	t_node;
+	int				i;
+	unsigned char	*temp;
+	unsigned char	ch;
 
-typedef struct s_stack
-{
-	unsigned int	cnt;
-	struct t_node	*node[2];
-}	t_stack;
-
-typedef struct s_pushswap
-{
-	unsigned int	cnt;
-	t_stack			a;
-	t_stack			b;
-}	t_pushswap;
-
-#endif
+	temp = b;
+	ch = c;
+	i = 0;
+	while (len--)
+	{
+		temp[i] = ch;
+		i++;
+	}
+	return (b);
+}

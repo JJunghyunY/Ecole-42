@@ -1,41 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/14 11:19:18 by junyoo            #+#    #+#             */
-/*   Updated: 2022/12/14 16:58:11 by junyoo           ###   ########.fr       */
+/*   Created: 2022/07/06 14:58:26 by junyoo            #+#    #+#             */
+/*   Updated: 2022/07/18 19:07:46 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-# include "libft/libft.h"
-
-typedef struct s_node
+char	*ft_strrchr(const char *s, int c)
 {
-	int				value;
-	size_t			index;
-	struct s_node	*prev;
-	struct s_node	*next;
-}	t_node;
+	int		i;
+	char	*temp;
 
-typedef struct s_stack
-{
-	unsigned int	cnt;
-	struct t_node	*node[2];
-}	t_stack;
-
-typedef struct s_pushswap
-{
-	unsigned int	cnt;
-	t_stack			a;
-	t_stack			b;
-}	t_pushswap;
-
-#endif
+	if (!s || !c)
+		return ((char *)s + ft_strlen(s));
+	temp = NULL;
+	i = 0;
+	while (s[i])
+	{	
+		if (s[i] == (unsigned char)c)
+			temp = (char *)s + i;
+		i++;
+	}
+	return (temp);
+}

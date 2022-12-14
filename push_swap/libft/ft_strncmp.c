@@ -1,41 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/14 11:19:18 by junyoo            #+#    #+#             */
-/*   Updated: 2022/12/14 16:58:11 by junyoo           ###   ########.fr       */
+/*   Created: 2022/07/06 15:11:01 by junyoo            #+#    #+#             */
+/*   Updated: 2022/07/18 12:01:26 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-# include "libft/libft.h"
-
-typedef struct s_node
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	int				value;
-	size_t			index;
-	struct s_node	*prev;
-	struct s_node	*next;
-}	t_node;
+	size_t			i;
+	unsigned char	*str1;
+	unsigned char	*str2;
 
-typedef struct s_stack
-{
-	unsigned int	cnt;
-	struct t_node	*node[2];
-}	t_stack;
-
-typedef struct s_pushswap
-{
-	unsigned int	cnt;
-	t_stack			a;
-	t_stack			b;
-}	t_pushswap;
-
-#endif
+	str1 = (unsigned char *)s1;
+	str2 = (unsigned char *)s2;
+	i = 0;
+	while ((str1[i] || str2[i]) && i < n)
+	{
+		if (str1[i] != str2[i])
+			return (str1[i] - str2[i]);
+		i++;
+	}
+	return (0);
+}

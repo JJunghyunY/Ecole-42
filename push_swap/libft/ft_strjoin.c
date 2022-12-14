@@ -1,41 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/14 11:19:18 by junyoo            #+#    #+#             */
-/*   Updated: 2022/12/14 16:58:11 by junyoo           ###   ########.fr       */
+/*   Created: 2022/07/09 17:10:26 by junyoo            #+#    #+#             */
+/*   Updated: 2022/07/18 16:27:04 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-# include "libft/libft.h"
-
-typedef struct s_node
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	int				value;
-	size_t			index;
-	struct s_node	*prev;
-	struct s_node	*next;
-}	t_node;
+	char	*str;
+	size_t	i;
+	size_t	j;
 
-typedef struct s_stack
-{
-	unsigned int	cnt;
-	struct t_node	*node[2];
-}	t_stack;
-
-typedef struct s_pushswap
-{
-	unsigned int	cnt;
-	t_stack			a;
-	t_stack			b;
-}	t_pushswap;
-
-#endif
+	if (!s1 || !s2)
+		return (NULL);
+	i = 0;
+	j = 0;
+	str = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) +1));
+	if (!str)
+		return (NULL);
+	while (i < ft_strlen(s1))
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	while (j < ft_strlen(s2))
+	{
+		str[i] = s2[j];
+		i++;
+		j++;
+	}
+	str[i] = '\0';
+	return (str);
+}
