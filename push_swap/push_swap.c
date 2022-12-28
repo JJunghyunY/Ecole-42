@@ -6,7 +6,7 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:19:15 by junyoo            #+#    #+#             */
-/*   Updated: 2022/12/14 17:06:50 by junyoo           ###   ########.fr       */
+/*   Updated: 2022/12/28 18:53:19 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,53 +16,109 @@
 
 // ./push_swap 1 2 3 4 "5" 6 "7" 8
 
+void	sort_dq(t_deque *a, t_deque *b)
+{
+	size_t	n;
+
+	if (a->first == a->last)
+		return ;
+	n = is_sorted(a);
+
+	if (n == 1)
+		return ;
+	else if (n == 2)
+		do_sa(a);
+	else if (n == 3)
+		sort_3(a);
+	else if (n == 4)
+		sort_4(a, b);
+	else if (n == 5)
+		sort_5(a, b);
+	// else if (n <= 6)
+	// 	basis_sort(a);
+}
+
 void	ret_error(void)
 {
-	write(1, "Error\n", 6);
+	write(2, "Error\n", 6);
 	exit(1);
 }
 
-void	check_digit(char *argv)
+void	index_argv(t_deque *a)
 {
-	int	i;
-	int	argvlen;
+	t_node	*temp;
+	t_node	*temp_2;
 
-	i = 0;
-	argvlen = ft_strlen(argv);
-	if (argvlen == 0)
-		ret_error();
-	while (i < argvlen)
+	temp = a->first;
+	while (temp)
 	{
-		if (!ft_isdigit(argv[i]))
-			ret_error();
-		i++;
+		temp_2 = a->first;
+		while (temp_2)
+		{
+			if (temp->value > temp_2->value)
+				temp->index++;
+			temp_2 = temp_2->next;
+		}
+		temp = temp->next;
 	}
 }
 
-void	parse_values(int argc, char *argv[])
+void	parse_argv(int argc, char *argv[], t_deque *a)
 {
-	int	i;
-	int	argvtoi;
+	int		i;
+	char	**splitted;
 
 	i = 1;
 	while (i < argc)
-	{
-		printf("argv = %s\n", argv[i]);
-		check_digit(argv[i]);
-		argvtoi = ft_atoi(argv[i]);
-		printf("atoid argv = %d\n", argvtoi);
+	{	
+		splitted = ft_split(argv[i], ' ');
+		if (!splitted)
+			ret_error();
+		while (*splitted)
+		{
+			dq_push_back(a, ft_atoi(*splitted));
+			a->size++;
+			splitted++;
+		}
 		i++;
 	}
 }
 
+t_deque	*init_dq(void)
+{
+	t_deque	*deque;
+
+	deque = malloc(sizeof(t_deque));
+	if (!deque)
+		ret_error();
+	deque->first = NULL;
+	deque->last = NULL;
+	deque->size = 0;
+	return (deque);
+}
+
+#include <stdio.h>
+
 int	main(int argc, char *argv[])
 {
-	char		cmd;
-	t_pushswap	ps;
+	t_deque	*a;
+	t_deque	*b;
+	t_node	*temp;
 
-	if (argc < 2)
-		exit(1);
-	ps_init(&ps);
-	parse_values(argc, argv);
+	a = init_dq();
+	b = init_dq();
+	check_arg(argc, argv);
+	parse_argv(argc, argv, a);
+	index_argv(a);
+	sort_dq(a, b);
+	// clear_dq(a, b);
+
+	// temp = a->first;
+	// while (temp->next)
+	// {
+	// 	printf("deque_a = %d, deque_a_index = %zu\n", temp->value, temp->index);
+	// 	temp = temp->next;
+	// }
+
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:19:18 by junyoo            #+#    #+#             */
-/*   Updated: 2022/12/14 16:58:11 by junyoo           ###   ########.fr       */
+/*   Updated: 2022/12/28 18:29:36 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,24 @@ typedef struct s_node
 	struct s_node	*next;
 }	t_node;
 
-typedef struct s_stack
+typedef struct s_deque
 {
-	unsigned int	cnt;
-	struct t_node	*node[2];
-}	t_stack;
+	size_t	size;
+	t_node	*first;
+	t_node	*last;
+}	t_deque;
 
-typedef struct s_pushswap
-{
-	unsigned int	cnt;
-	t_stack			a;
-	t_stack			b;
-}	t_pushswap;
+void	ret_error(void);
+
+int		dq_push_back(t_deque *deq, int value);
+int		dq_push_front(t_deque *deq, int value);
+int		dq_pop_front(t_deque *deq);
+int		dq_pop_back(t_deque *deq);
+
+void	check_dup_value(t_deque	*deque, int value);
+void	check_arg(int argc, char *argv[]);
+void	check_digit(char *argv);
+
+size_t	is_sorted(t_deque *a);
 
 #endif
