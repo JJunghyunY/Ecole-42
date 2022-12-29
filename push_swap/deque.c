@@ -6,20 +6,20 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 15:31:12 by junyoo            #+#    #+#             */
-/*   Updated: 2022/12/22 03:55:08 by junyoo           ###   ########.fr       */
+/*   Updated: 2022/12/29 16:30:16 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./push_swap.h"
 
-int	dq_push_back(t_deque *deque, int value)
+void	dq_push_back(t_deque *deque, int value)
 {
 	t_node	*new_node;
 
 	check_dup_value(deque, value);
 	new_node = malloc(sizeof(t_node));
 	if (new_node == NULL)
-		return (1);
+		ret_error();
 	new_node->value = value;
 	new_node->next = NULL;
 	new_node->prev = deque->last;
@@ -34,17 +34,16 @@ int	dq_push_back(t_deque *deque, int value)
 			deque->last->next = new_node;
 		deque->last = new_node;
 	}
-	return (0);
 }
 
-int	dq_push_front(t_deque *deque, int value)
+void	dq_push_front(t_deque *deque, int value)
 {
 	t_node	*new_node;
 
 	check_dup_value(deque, value);
 	new_node = malloc(sizeof(t_node));
 	if (new_node == NULL)
-		return (1);
+		ret_error();
 	new_node->value = value;
 	new_node->prev = NULL;
 	if (deque->first == NULL)
@@ -59,43 +58,44 @@ int	dq_push_front(t_deque *deque, int value)
 		new_node->next = deque->first;
 		deque->first = new_node;
 	}
-	return (0);
 }
 
-int	dq_pop_front(t_deque *deque)
+void	dq_pop_front(t_deque *deque)
 {
 	t_node	*save;
 
 	if (deque->first == NULL)
-		return (0);
+		ret_error();
 	save = deque->first->next;
 	free(deque->first);
 	if (save == NULL)
 	{
-		deque->first = save;
-		deque->last = save;
-		return (1);
+		deque->first = NULL;
+		deque->last = NULL;
 	}
-	deque->first = save;
-	save->prev = NULL;
-	return (1);
+	else
+	{
+		deque->first = save;
+		save->prev = NULL;
+	}
 }
 
-int	dq_pop_back(t_deque *deque)
+void	dq_pop_back(t_deque *deque)
 {
 	t_node	*save;
 
 	if (deque->last == NULL)
-		return (0);
+		ret_error();
 	save = deque->last->prev;
 	free(deque->last);
 	if (save == NULL)
 	{
-		deque->first = save;
-		deque->last = save;
-		return (1);
+		deque->first = NULL;
+		deque->last = NULL;
 	}
-	deque->last = save;
-	save->next = NULL;
-	return (0);
+	else
+	{
+		deque->last = save;
+		save->next = NULL;
+	}
 }

@@ -6,15 +6,12 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:19:15 by junyoo            #+#    #+#             */
-/*   Updated: 2022/12/28 18:53:19 by junyoo           ###   ########.fr       */
+/*   Updated: 2022/12/29 19:13:05 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./libft/libft.h"
 #include "./push_swap.h"
 #include <stdio.h>
-
-// ./push_swap 1 2 3 4 "5" 6 "7" 8
 
 void	sort_dq(t_deque *a, t_deque *b)
 {
@@ -23,17 +20,16 @@ void	sort_dq(t_deque *a, t_deque *b)
 	if (a->first == a->last)
 		return ;
 	n = is_sorted(a);
-
 	if (n == 1)
 		return ;
 	else if (n == 2)
-		do_sa(a);
-	else if (n == 3)
-		sort_3(a);
-	else if (n == 4)
-		sort_4(a, b);
-	else if (n == 5)
-		sort_5(a, b);
+		swap(a, b, SA);
+	// else if (n == 3)
+	// 	sort_3(a);
+	// else if (n == 4)
+	// 	sort_4(a, b);
+	// else if (n == 5)
+	// 	sort_5(a, b);
 	// else if (n <= 6)
 	// 	basis_sort(a);
 }
@@ -97,8 +93,6 @@ t_deque	*init_dq(void)
 	return (deque);
 }
 
-#include <stdio.h>
-
 int	main(int argc, char *argv[])
 {
 	t_deque	*a;
@@ -113,12 +107,19 @@ int	main(int argc, char *argv[])
 	sort_dq(a, b);
 	// clear_dq(a, b);
 
-	// temp = a->first;
-	// while (temp->next)
-	// {
-	// 	printf("deque_a = %d, deque_a_index = %zu\n", temp->value, temp->index);
-	// 	temp = temp->next;
-	// }
-
+	temp = a->first;
+	while (temp)
+	{
+		printf("deque_a = %d, deque_a_index = %zu\n", temp->value, temp->index);
+		temp = temp->next;
+	}
+	printf("a size is %zu\n\n", a->size);
+	temp = b->first;
+	while (temp)
+	{
+		printf("deque_b = %d, deque_b_index = %zu\n", temp->value, temp->index);
+		temp = temp->next;
+	}
+	printf("b size is %zu\n\n", b->size);
 	return (0);
 }

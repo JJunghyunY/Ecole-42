@@ -6,7 +6,7 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 16:29:05 by junyoo            #+#    #+#             */
-/*   Updated: 2022/12/28 18:50:23 by junyoo           ###   ########.fr       */
+/*   Updated: 2022/12/29 13:43:34 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ size_t	is_sorted(t_deque *a)
 }
 
 void	basis_sort(t_deque *a)
-{
-	
+{	
 	return ;
 }
