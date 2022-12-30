@@ -6,7 +6,7 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 13:03:58 by junyoo            #+#    #+#             */
-/*   Updated: 2022/12/30 16:41:23 by junyoo           ###   ########.fr       */
+/*   Updated: 2022/12/30 19:01:12 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	sort_sandglass(t_deque *a, t_deque *b)
 
 	i = 0;
 	x = a->size;
-	chunk = 0.000000053 * (x * x) + 0.03 * x + 14.5;
+	chunk = 0.03 * x + 13.5;
 	a_to_b(a, b, chunk, i);
 	b_to_a(a, b);
 }

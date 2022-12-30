@@ -6,7 +6,7 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:19:15 by junyoo            #+#    #+#             */
-/*   Updated: 2022/12/30 16:43:43 by junyoo           ###   ########.fr       */
+/*   Updated: 2022/12/30 19:23:49 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,24 @@ static void	sort_dq(t_deque *a, t_deque *b)
 	// 	basis_sort(a);
 }
 
+static void	clear_dq(t_deque *a, t_deque *b)
+{
+	t_node	*node;
+	
+	node = a->first;
+	while (node)
+	{
+		node = node->next;
+		dq_pop_front(a);
+	}
+	node = b->first;
+	while (node)
+	{
+		node = node->next;
+		dq_pop_front(b);
+	}
+}
+
 int	main(int argc, char *argv[])
 {
 	t_deque	*a;
@@ -66,7 +84,7 @@ int	main(int argc, char *argv[])
 	parse_argv(argc, argv, a);
 	index_argv(a);
 	sort_dq(a, b);
-	// clear_dq(a, b);
+	clear_dq(a, b);
 	return (0);
 }
 
