@@ -6,11 +6,24 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 15:31:12 by junyoo            #+#    #+#             */
-/*   Updated: 2022/12/29 16:30:16 by junyoo           ###   ########.fr       */
+/*   Updated: 2022/12/30 17:15:54 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./push_swap.h"
+
+static void	check_dup_value(t_deque	*deque, int value)
+{
+	t_node	*checker;
+
+	checker = deque->first;
+	while (checker)
+	{
+		if (checker->value == value)
+			ret_error();
+		checker = checker->next;
+	}
+}
 
 void	dq_push_back(t_deque *deque, int value)
 {
