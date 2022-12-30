@@ -6,30 +6,12 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:19:15 by junyoo            #+#    #+#             */
-/*   Updated: 2022/12/30 20:00:25 by junyoo           ###   ########.fr       */
+/*   Updated: 2022/12/30 20:17:13 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./push_swap.h"
 #include <stdio.h>
-
-void	print_dq(t_deque *dq)
-{
-	t_node	*temp;
-	int		i;
-
-	i = 0;
-	temp = dq->first;
-	printf("\n*******************************************************\n");
-	while (temp)
-	{
-		printf("deque_%d = %d, deque_%d_index = %zu\n", i, temp->value, i, temp->index);
-		temp = temp->next;
-		i++;
-	}
-	printf("dq size is %zu\n", dq->size);
-	printf("\n*******************************************************\n");
-}
 
 static void	sort_dq(t_deque *a, t_deque *b)
 {
@@ -70,6 +52,12 @@ static void	clear_dq(t_deque *a, t_deque *b)
 	}
 }
 
+void	ret_error(void)
+{
+	write(2, "Error\n", 6);
+	exit(1);
+}
+
 int	main(int argc, char *argv[])
 {
 	t_deque	*a;
@@ -83,10 +71,4 @@ int	main(int argc, char *argv[])
 	sort_dq(a, b);
 	clear_dq(a, b);
 	return (0);
-}
-
-void	ret_error(void)
-{
-	write(2, "Error\n", 6);
-	exit(1);
 }

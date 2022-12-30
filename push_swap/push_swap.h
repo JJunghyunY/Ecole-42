@@ -6,7 +6,7 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:19:18 by junyoo            #+#    #+#             */
-/*   Updated: 2022/12/30 20:01:04 by junyoo           ###   ########.fr       */
+/*   Updated: 2022/12/30 20:13:05 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,22 +37,19 @@ typedef struct s_deque
 typedef enum e_cmd_case
 {
 	SA		= 0,
-	SB		= 1,
-	SS		= 2,
-	PA		= 3,
-	PB		= 4,
-	RA		= 5,
-	RB		= 6,
-	RR		= 7,
-	RRA		= 8,
-	RRB		= 9,
-	RRR		= 10
+	SB,
+	SS,
+	PA,
+	PB,
+	RA,
+	RB,
+	RR,
+	RRA,
+	RRB,
+	RRR
 }	t_cmd_case;
 
-void	print_dq(t_deque *dq);
-
 void	ret_error(void);
-
 void	check_arg(int argc, char *argv[]);
 
 t_deque	*init_dq(void);
