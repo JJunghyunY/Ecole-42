@@ -6,7 +6,7 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:19:18 by junyoo            #+#    #+#             */
-/*   Updated: 2022/12/30 16:46:15 by junyoo           ###   ########.fr       */
+/*   Updated: 2022/12/30 20:01:04 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ typedef enum e_cmd_case
 	RRR		= 10
 }	t_cmd_case;
 
+void	print_dq(t_deque *dq);
+
 void	ret_error(void);
 
 void	check_arg(int argc, char *argv[]);
@@ -69,5 +71,8 @@ void	rotate(t_deque *a, t_deque *b, t_cmd_case cmd_case);
 void	reverse_rotate(t_deque *a, t_deque *b, t_cmd_case cmd_case);
 
 void	sort_sandglass(t_deque *a, t_deque *b);
+void	sort_3_arg(t_deque *a, t_deque *b);
+void	sort_4_arg(t_deque *a, t_deque *b);
+void	sort_5_arg(t_deque *a, t_deque *b);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:19:15 by junyoo            #+#    #+#             */
-/*   Updated: 2022/12/30 19:23:49 by junyoo           ###   ########.fr       */
+/*   Updated: 2022/12/30 20:00:25 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,23 +42,20 @@ static void	sort_dq(t_deque *a, t_deque *b)
 		return ;
 	else if (n == 2)
 		swap(a, b, SA);
+	else if (n == 3)
+		sort_3_arg(a, b);
+	else if (n == 4)
+		sort_4_arg(a, b);
+	else if (n == 5)
+		sort_5_arg(a, b);
 	else
 		sort_sandglass(a, b);
-
-	// else if (n == 3)
-	// 	sort_3(a);
-	// else if (n == 4)
-	// 	sort_4(a, b);
-	// else if (n == 5)
-	// 	sort_5(a, b);
-	// else if (n <= 6)
-	// 	basis_sort(a);
 }
 
 static void	clear_dq(t_deque *a, t_deque *b)
 {
 	t_node	*node;
-	
+
 	node = a->first;
 	while (node)
 	{
