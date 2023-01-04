@@ -6,7 +6,7 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 18:59:09 by junyoo            #+#    #+#             */
-/*   Updated: 2022/12/30 16:12:29 by junyoo           ###   ########.fr       */
+/*   Updated: 2023/01/04 21:27:06 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,16 @@
 
 static int	_reverse_rotate(t_deque *deque)
 {
-	t_node	*save;
+	int		value;
+	size_t	index;
 
 	if (deque->first == NULL)
 		return (0);
-	save = deque->last;
+	value = deque->last->value;
+	index = deque->last->index;
 	dq_pop_back(deque);
-	dq_push_front(deque, save->value);
-	deque->first->index = save->index;
+	dq_push_front(deque, value);
+	deque->first->index = index;
 	return (1);
 }
 

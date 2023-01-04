@@ -6,7 +6,7 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 19:28:46 by junyoo            #+#    #+#             */
-/*   Updated: 2022/12/30 20:07:19 by junyoo           ###   ########.fr       */
+/*   Updated: 2023/01/04 23:00:12 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,26 @@ void	sort_3_arg(t_deque *a, t_deque *b)
 	t_node	*curr;
 
 	curr = a->first->next;
-	if (a->first->value > curr->value)
+	if (a->first->index == 0)
 	{
-		curr = curr->next;
-		if (a->first->value > curr->value)
-			rotate(a, b, RA);
-		curr = a->first->next;
-		if (a->first->value > curr->value)
-			swap(a, b, SA);
+		swap(a, b, SA);
+		rotate(a, b, RA);
 	}
-	else
+	else if (a->first->index == 1)
 	{
-		if (curr->value < curr->next->value)
+		if (curr->index == 0)
 			swap(a, b, SA);
-		else if (curr->value > curr->next->value)
-		{
+		else
 			reverse_rotate(a, b, RRA);
-			if (a->first->value > a->first->next->value)
-				swap(a, b, SA);
+	}
+	else if (a->first->index == 2)
+	{
+		if (curr->index == 0)
+			rotate(a, b, RA);
+		else
+		{
+			rotate(a, b, RA);
+			rotate(a, b, RA);
 		}
 	}
 }
@@ -64,19 +66,12 @@ void	sort_4_arg(t_deque *a, t_deque *b)
 
 void	sort_5_arg(t_deque *a, t_deque *b)
 {
-	int		countpb;
-
-	countpb = 0;
-	while (countpb != 2)
-	{
-		if (a->first->index < 2)
-		{
-			push(a, b, PB);
-			countpb++;
-		}
-		else
-			rotate(a, b, RA);
-	}
+	while (a->first->index != 0 || a->first->index != 1)
+		rotate(a, b, RA);
+	push(a, b, PB);
+	while (a->first->index != 1 || a->first->index != 0)
+		rotate(a, b, RA);
+	push(a, b, PB);
 	if (is_sorted(a) != 1)
 		sort_3_arg(a, b);
 	if (b->first->value < b->last->value)

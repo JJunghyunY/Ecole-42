@@ -6,7 +6,7 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 13:03:58 by junyoo            #+#    #+#             */
-/*   Updated: 2023/01/04 12:34:58 by junyoo           ###   ########.fr       */
+/*   Updated: 2023/01/04 22:14:54 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,7 @@ static void	a_to_b(t_deque *a, t_deque *b, int chunk, size_t i)
 			i++;
 		}
 		else if (first_index > (i + chunk))
-		{
-			if (i < a->size / 2 && i >= 0)
-				reverse_rotate(a, b, RRA);
-			else
-				rotate(a, b, RA);
-		}
+			rotate(a, b, RA);
 	}
 }
 

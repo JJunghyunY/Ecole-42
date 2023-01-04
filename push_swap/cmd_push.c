@@ -6,7 +6,7 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 16:35:14 by junyoo            #+#    #+#             */
-/*   Updated: 2022/12/30 16:12:19 by junyoo           ###   ########.fr       */
+/*   Updated: 2023/01/04 21:28:46 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,18 @@
 
 static int	_push(t_deque *push_deque, t_deque *pop_deque)
 {
-	t_node	*save;
+	int		value;
+	size_t	index;
 
 	if (pop_deque->first == NULL)
 		return (0);
-	save = pop_deque->first;
+	value = pop_deque->first->value;
+	index = pop_deque->first->index;
 	dq_pop_front(pop_deque);
 	pop_deque->size--;
-	dq_push_front(push_deque, save->value);
+	dq_push_front(push_deque, value);
 	push_deque->size++;
-	push_deque->first->index = save->index;
+	push_deque->first->index = index;
 	return (1);
 }
 

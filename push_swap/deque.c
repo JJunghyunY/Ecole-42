@@ -6,7 +6,7 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 15:31:12 by junyoo            #+#    #+#             */
-/*   Updated: 2022/12/30 17:15:54 by junyoo           ###   ########.fr       */
+/*   Updated: 2023/01/04 22:17:12 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	dq_push_back(t_deque *deque, int value)
 	if (new_node == NULL)
 		ret_error();
 	new_node->value = value;
+	new_node->index = 0;
 	new_node->next = NULL;
 	new_node->prev = deque->last;
 	if (deque->last == NULL && deque->first == NULL)
@@ -58,6 +59,7 @@ void	dq_push_front(t_deque *deque, int value)
 	if (new_node == NULL)
 		ret_error();
 	new_node->value = value;
+	new_node->index = 0;
 	new_node->prev = NULL;
 	if (deque->first == NULL)
 	{
@@ -81,6 +83,7 @@ void	dq_pop_front(t_deque *deque)
 		ret_error();
 	save = deque->first->next;
 	free(deque->first);
+	deque->first = NULL;
 	if (save == NULL)
 	{
 		deque->first = NULL;
@@ -101,6 +104,7 @@ void	dq_pop_back(t_deque *deque)
 		ret_error();
 	save = deque->last->prev;
 	free(deque->last);
+	deque->last = NULL;
 	if (save == NULL)
 	{
 		deque->first = NULL;
