@@ -6,7 +6,7 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 13:03:58 by junyoo            #+#    #+#             */
-/*   Updated: 2022/12/30 19:01:12 by junyoo           ###   ########.fr       */
+/*   Updated: 2023/01/04 12:34:58 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,11 @@ static void	b_to_a(t_deque *a, t_deque *b)
 
 void	sort_sandglass(t_deque *a, t_deque *b)
 {
-	int	i;
 	int	x;
 	int	chunk;
 
-	i = 0;
 	x = a->size;
-	chunk = 0.03 * x + 13.5;
-	a_to_b(a, b, chunk, i);
+	chunk = 0.03 * x + 12.5;
+	a_to_b(a, b, chunk, 0);
 	b_to_a(a, b);
 }
