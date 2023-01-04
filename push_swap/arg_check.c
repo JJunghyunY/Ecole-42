@@ -6,7 +6,7 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 00:43:54 by junyoo            #+#    #+#             */
-/*   Updated: 2023/01/04 13:20:41 by junyoo           ###   ########.fr       */
+/*   Updated: 2023/01/04 13:31:42 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	check_arg(int argc, char *argv[])
 	int		i;
 
 	if (argc < 2)
-		exit(0);
+		exit(1);
 	i = 1;
 	while (i < argc)
 	{
