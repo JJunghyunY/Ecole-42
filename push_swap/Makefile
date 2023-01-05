@@ -6,7 +6,7 @@
 #    By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/14 11:19:13 by junyoo            #+#    #+#              #
-#    Updated: 2022/12/30 20:15:44 by junyoo           ###   ########.fr        #
+#    Updated: 2023/01/05 15:03:05 by junyoo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,6 @@ clean:
 	$(RM) $(OBJS)
 
 fclean:	clean
-	make -C $(LIBFT_DIR) fclean
 	$(RM) $(NAME)
 
 re:

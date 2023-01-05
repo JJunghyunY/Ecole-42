@@ -6,75 +6,83 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 19:28:46 by junyoo            #+#    #+#             */
-/*   Updated: 2023/01/04 23:00:12 by junyoo           ###   ########.fr       */
+/*   Updated: 2023/01/05 16:58:51 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./push_swap.h"
 
-void	sort_3_arg(t_deque *a, t_deque *b)
+static size_t	dq_get_min(t_deque *deque)
 {
+	size_t	min;
 	t_node	*curr;
 
-	curr = a->first->next;
-	if (a->first->index == 0)
+	min = deque->first->index;
+	curr = deque->first;
+	while (curr)
 	{
-		swap(a, b, SA);
-		rotate(a, b, RA);
+		if (min > curr->index)
+			min = curr->index;
+		curr = curr->next;
 	}
-	else if (a->first->index == 1)
+	return (min);
+}
+
+void	sort_3_arg(t_deque *a, t_deque *b)
+{
+	t_node	*next;
+
+	next = a->first->next;
+	if (a->first->index > next->index)
 	{
-		if (curr->index == 0)
+		next = next->next;
+		if (a->first->index > next->index)
+			rotate(a, b, RA);
+		next = a->first->next;
+		if (a->first->index > next->index)
+			swap(a, b, SA);
+	}
+	else
+	{
+		if (a->first->index > next->index)
 			swap(a, b, SA);
 		else
 			reverse_rotate(a, b, RRA);
-	}
-	else if (a->first->index == 2)
-	{
-		if (curr->index == 0)
-			rotate(a, b, RA);
-		else
-		{
-			rotate(a, b, RA);
-			rotate(a, b, RA);
-		}
+		next = a->first->next;
+		if (a->first->index > next->index)
+			swap(a, b, SA);
 	}
 }
 
 void	sort_4_arg(t_deque *a, t_deque *b)
 {
-	int		min;
-	t_node	*curr;
+	size_t	min;
 
-	min = a->first->value;
-	curr = a->first;
-	while (curr)
-	{
-		if (min > curr->value)
-			min = curr->value;
-		curr = curr->next;
-	}
-	while (a->first->value != min)
+	min = dq_get_min(a);
+	while (a->first->index != min)
 		rotate(a, b, RA);
+	push(a, b, PB);
 	if (is_sorted(a) != 1)
-	{
-		push(a, b, PB);
 		sort_3_arg(a, b);
-		push(a, b, PA);
-	}
+	push(a, b, PA);
 }
 
 void	sort_5_arg(t_deque *a, t_deque *b)
 {
-	while (a->first->index != 0 || a->first->index != 1)
-		rotate(a, b, RA);
-	push(a, b, PB);
-	while (a->first->index != 1 || a->first->index != 0)
-		rotate(a, b, RA);
-	push(a, b, PB);
+	t_node	*curr;
+
+	curr = a->first;
+	while (curr)
+	{
+		if (curr->index >= 3)
+			push(a, b, PB);
+		else
+			rotate(a, b, RA);
+		curr = curr->next;
+	}
 	if (is_sorted(a) != 1)
 		sort_3_arg(a, b);
-	if (b->first->value < b->last->value)
+	if (b->first->index < b->last->index)
 		swap(a, b, SB);
 	push(a, b, PA);
 	push(a, b, PA);
