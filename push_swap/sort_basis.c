@@ -6,7 +6,7 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 19:28:46 by junyoo            #+#    #+#             */
-/*   Updated: 2023/01/05 16:58:51 by junyoo           ###   ########.fr       */
+/*   Updated: 2023/01/08 22:24:49 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,18 +67,20 @@ void	sort_4_arg(t_deque *a, t_deque *b)
 	push(a, b, PA);
 }
 
+# include <stdio.h>
+
 void	sort_5_arg(t_deque *a, t_deque *b)
 {
-	t_node	*curr;
+	int		i;
 
-	curr = a->first;
-	while (curr)
+	i = 0;
+	while (i < 5)
 	{
-		if (curr->index >= 3)
+		if (a->first->index <= 1)
 			push(a, b, PB);
 		else
 			rotate(a, b, RA);
-		curr = curr->next;
+		i++;
 	}
 	if (is_sorted(a) != 1)
 		sort_3_arg(a, b);
