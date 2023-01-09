@@ -6,12 +6,11 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:19:15 by junyoo            #+#    #+#             */
-/*   Updated: 2023/01/05 16:13:23 by junyoo           ###   ########.fr       */
+/*   Updated: 2023/01/09 15:17:05 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./push_swap.h"
-#include <stdio.h>
 
 static void	sort_dq(t_deque *a, t_deque *b)
 {

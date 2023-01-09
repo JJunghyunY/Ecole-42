@@ -6,7 +6,7 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:19:18 by junyoo            #+#    #+#             */
-/*   Updated: 2023/01/04 22:17:56 by junyoo           ###   ########.fr       */
+/*   Updated: 2023/01/09 17:00:35 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_deque
 
 typedef enum e_cmd_case
 {
-	SA		= 0,
+	SA,
 	SB,
 	SS,
 	PA,

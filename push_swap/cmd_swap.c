@@ -6,7 +6,7 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 18:54:19 by junyoo            #+#    #+#             */
-/*   Updated: 2023/01/04 19:41:18 by junyoo           ###   ########.fr       */
+/*   Updated: 2023/01/09 16:58:03 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 static int	_swap(t_deque *deque)
 {
-	int	temp_value;
-	int	temp_index;
+	int		value;
+	size_t	index;
 
 	if (deque->first == NULL || deque->first->next == NULL)
 		return (0);
-	temp_value = deque->first->value;
-	temp_index = deque->first->index;
+	value = deque->first->value;
+	index = deque->first->index;
 	deque->first->value = deque->first->next->value;
 	deque->first->index = deque->first->next->index;
-	deque->first->next->value = temp_value;
-	deque->first->next->index = temp_index;
+	deque->first->next->value = value;
+	deque->first->next->index = index;
 	return (1);
 }
 

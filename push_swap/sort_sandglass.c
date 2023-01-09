@@ -6,7 +6,7 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 13:03:58 by junyoo            #+#    #+#             */
-/*   Updated: 2023/01/04 22:14:54 by junyoo           ###   ########.fr       */
+/*   Updated: 2023/01/09 16:52:55 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ static void	a_to_b(t_deque *a, t_deque *b, int chunk, size_t i)
 	}
 }
 
-static void	sort_b(t_deque *a, t_deque *b, size_t length)
+static void	sort_b(t_deque *a, t_deque *b, size_t blength)
 {
 	size_t	i;
 	t_node	*node;
 
 	node = b->last;
 	i = 0;
-	while (i < b->size && node->index != length)
+	while (i < b->size && node->index != blength)
 	{
 		node = node->prev;
 		i++;
@@ -57,7 +57,7 @@ static void	sort_b(t_deque *a, t_deque *b, size_t length)
 		reverse_rotate(a, b, RRB);
 		i--;
 	}
-	while (i >= b->size / 2 && i < b->size - 1)
+	while (i >= b->size / 2 && i < blength)
 	{
 		rotate(a, b, RB);
 		i++;
@@ -66,14 +66,14 @@ static void	sort_b(t_deque *a, t_deque *b, size_t length)
 
 static void	b_to_a(t_deque *a, t_deque *b)
 {
-	int	length;
+	size_t	blength;
 
-	length = b->size - 1;
+	blength = b->size - 1;
 	while (b->size != 0)
 	{
-		sort_b(a, b, length);
+		sort_b(a, b, blength);
 		push(a, b, PA);
-		length--;
+		blength--;
 	}
 }
 
@@ -83,7 +83,7 @@ void	sort_sandglass(t_deque *a, t_deque *b)
 	int	chunk;
 
 	x = a->size;
-	chunk = 0.03 * x + 12.5;
+	chunk = 0.04 * x + 12.5;
 	a_to_b(a, b, chunk, 0);
 	b_to_a(a, b);
 }
