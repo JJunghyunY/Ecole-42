@@ -8,7 +8,7 @@
 
 <p align="center">
   <img alt="File count" src="https://img.shields.io/github/directory-file-count/JJunghyunY/Ecole-42/get_next_line" />
-	<img alt="Code language count" src="https://img.shields.io/github/languages/count/surfi89/get_next_line?color=yellow" />
+	<img alt="Keywords" src="https://img.shields.io/badge/keyword-Unix%20logic-red" />
 	<img alt="GitHub top language" src="https://img.shields.io/github/languages/top/surfi89/get_next_line?color=blue" />
 </p>
 
