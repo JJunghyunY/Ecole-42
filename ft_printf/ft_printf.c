@@ -6,7 +6,7 @@
 /*   By: junyoo <junyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 12:17:34 by junyoo            #+#    #+#             */
-/*   Updated: 2022/09/26 16:45:13 by junyoo           ###   ########.fr       */
+/*   Updated: 2023/01/12 13:05:24 by junyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	ft_check_format(const char *format, va_list ap)
 	if (*format == 'c')
 		ret_len += ft_putchar_int(va_arg(ap, int));
 	else if (*format == 's')
-		ret_len += ft_putstr_int((char *)va_arg(ap, char *));
+		ret_len += ft_putstr_int(va_arg(ap, char *));
 	else if (*format == 'p')
 		ret_len += ft_putptr_int(va_arg(ap, unsigned int *));
 	else if (*format == 'd' || *format == 'i')
