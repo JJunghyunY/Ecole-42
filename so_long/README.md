@@ -8,6 +8,7 @@
 
 <p align="center">
 	<img alt="Number of files" src="https://img.shields.io/github/directory-file-count/JJunghyunY/Ecole-42/so_long" />
+	<img alt="Keyword name" src="https://img.shields.io/badge/keyword-Applicative-red" />
 	<img alt="Library name" src="https://img.shields.io/badge/lib-MiniLibX-lightgrey" />
 	<img alt="Clang" src="https://img.shields.io/badge/c-100%25-blue" />
 </p>
